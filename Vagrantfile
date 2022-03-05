@@ -22,28 +22,30 @@ Vagrant.configure("2") do |config|
       vb.memory = "3072"
     end
 
-    c.vm.provision "shell", path: "provision_common.sh"
+    c.vm.provision "shell", path: "provision_common.sh", args: [ip]
     c.vm.provision "shell", path: "provision_master.sh", args: [ip]
   end
 
   config.vm.define "worker1" do |c|
+    ip = "172.16.33.11"
     c.vm.hostname = "worker1"
-    c.vm.network "private_network", ip: "172.16.33.11"
+    c.vm.network "private_network", ip: ip
     c.vm.provider "virtualbox" do |vb|
       vb.memory = "3072"
     end
 
-    c.vm.provision "shell", path: "provision_common.sh"
+    c.vm.provision "shell", path: "provision_common.sh", args: [ip]
   end
 
   config.vm.define "worker2" do |c|
+    ip = "172.16.33.12"
     c.vm.hostname = "worker2"
-    c.vm.network "private_network", ip: "172.16.33.12"
+    c.vm.network "private_network", ip: ip
     c.vm.provider "virtualbox" do |vb|
       vb.memory = "3072"
     end
 
-    c.vm.provision "shell", path: "provision_common.sh"
+    c.vm.provision "shell", path: "provision_common.sh", args: [ip]
   end
 
 

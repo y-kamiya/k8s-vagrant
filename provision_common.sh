@@ -1,3 +1,5 @@
+ip=$1
+
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
 overlay
 br_netfilter
@@ -38,6 +40,10 @@ EOF
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
+
+if [ -f /etc/systemd/system/kubelet.service.d/10-kubeadm.conf ]; then
+    echo Environment="KUBELET_EXTRA_ARGS=--node-ip=$ip" >> /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+fi
 
 sed -i -e "s@^\(/swap.img\)@#\1@" /etc/fstab
 sudo swapoff -a
