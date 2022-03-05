@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockercloud
+spec:
+  selector:
+    matchLabels:
+      app: dockercloud
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dockercloud
+    spec:
+      containers:
+      - name: dockercloud
+        image: dockercloud/hello-world:latest
+        ports:
+        - containerPort: 80
+
+
+
